@@ -58,8 +58,9 @@ SELECT  employee_id     AS  "EMPLOYEE ID",
         salary          AS  "SALARY",
         department_id   AS  "DEPARTMENT ID"
 FROM    employees
-WHERE   salary >=10000  OR  hire_date > to_date('01-MAY-1999', 'DD-MON-YYYY')
-AND     department_id   NOT LIKE 'SA_REP';
+WHERE   job_id  NOT IN  ('SA_REP')
+AND     (salary >=10000  
+OR      hire_date > to_date('01-MAY-1999', 'DD-MON-YYYY'));
 
 REM 17. Display the employee details (first name, salary, hire date and dept id) whose salary falls in 
 REM     the range of 5000 to 15000 and his/her name begins with any of characters (A,J,K,S). Sort 
