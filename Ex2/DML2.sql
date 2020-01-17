@@ -34,7 +34,7 @@ SELECT  employee_id     AS  "EMPLOYEE ID",
         salary          AS  "SALARY",
         commission_pct  AS  "COMMISSION"
 FROM    employees
-WHERE   commission_pct IS NOT NULL;
+WHERE   commission_pct  IS NOT NULL;
 
 REM 15. Display the details (id, first name, job id, salary and dept id) of employees who are 
 REM     MANAGERS.
@@ -45,7 +45,7 @@ SELECT  employee_id     AS  "EMPLOYEE ID",
         salary          AS  "SALARY",
         department_id   AS  "DEPARTMENT ID"
 FROM    employees
-WHERE   job_id  LIKE '%MAN';
+WHERE   job_id          LIKE '%MAN';
 
 REM 16. Display the details of employees other than sales representatives (id, first name, hire date, 
 REM     job id, salary and dept id) who are hired after ‘01­May­1999’ or whose salary is at least 
@@ -59,8 +59,7 @@ SELECT  employee_id     AS  "EMPLOYEE ID",
         department_id   AS  "DEPARTMENT ID"
 FROM    employees
 WHERE   job_id  NOT IN  ('SA_REP')
-AND     (salary >=10000  
-OR      hire_date > to_date('01-MAY-1999', 'DD-MON-YYYY'));
+AND     (salary >=10000 OR hire_date > to_date('01-MAY-1999', 'DD-MON-YYYY'));
 
 REM 17. Display the employee details (first name, salary, hire date and dept id) whose salary falls in 
 REM     the range of 5000 to 15000 and his/her name begins with any of characters (A,J,K,S). Sort 
@@ -71,11 +70,8 @@ SELECT      first_name      AS  "FIRST NAME",
             hire_date       AS  "HIRE DATE",
             department_id   AS  "DEPARTMENT ID"
 FROM        employees
-WHERE       first_name  LIKE    'A%'
-OR          first_name  LIKE    'J%'
-OR          first_name  LIKE    'K%'
-OR          first_name  LIKE    'S%'
-AND         salary      BETWEEN 5000 AND 15000
+WHERE       SUBSTR(first_name, 1, 1)    IN  ('A', 'J', 'K', 'S')
+AND         salary                      BETWEEN 5000 AND 15000
 ORDER BY    first_name;
 
 REM 18. Display the experience of employees in no. of years and months who were hired after 1998. 

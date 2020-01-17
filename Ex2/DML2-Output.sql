@@ -1,3 +1,6 @@
+SQL> SET ECHO ON;
+SQL> 
+SQL> 
 SQL> REM ********************************************************************
 SQL> REM 		UCS 1412 - DATABASE LAB | IV SEMESTER
 SQL> REM 		EX : 2     DML BASICS
@@ -117,7 +120,7 @@ SQL> SELECT  employee_id     AS  "EMPLOYEE ID",
   3          salary          AS  "SALARY",
   4          commission_pct  AS  "COMMISSION"
   5  FROM    employees
-  6  WHERE   commission_pct IS NOT NULL;
+  6  WHERE   commission_pct  IS NOT NULL;
 
 EMPLOYEE ID FIRST NAME               SALARY COMMISSION
 ----------- -------------------- ---------- ----------
@@ -136,7 +139,7 @@ SQL> SELECT  employee_id     AS  "EMPLOYEE ID",
   4          salary          AS  "SALARY",
   5          department_id   AS  "DEPARTMENT ID"
   6  FROM    employees
-  7  WHERE   job_id  LIKE '%MAN';
+  7  WHERE   job_id          LIKE '%MAN';
 
 EMPLOYEE ID FIRST NAME           JOB ID         SALARY DEPARTMENT ID
 ----------- -------------------- ---------- ---------- -------------
@@ -146,7 +149,7 @@ EMPLOYEE ID FIRST NAME           JOB ID         SALARY DEPARTMENT ID
 
 SQL> 
 SQL> REM 16. Display the details of employees other than sales representatives (id, first name, hire date, 
-SQL> REM     job id, salary and dept id) who are hired after ‘01­May­1999’ or whose salary is at least 
+SQL> REM     job id, salary and dept id) who are hired after ï¿½01ï¿½Mayï¿½1999ï¿½ or whose salary is at least 
 SQL> REM     10000
 SQL> 
 SQL> SELECT  employee_id     AS  "EMPLOYEE ID",
@@ -157,8 +160,7 @@ SQL> SELECT  employee_id     AS  "EMPLOYEE ID",
   6          department_id   AS  "DEPARTMENT ID"
   7  FROM    employees
   8  WHERE   job_id  NOT IN  ('SA_REP')
-  9  AND     (salary >=10000  
- 10  OR      hire_date > to_date('01-MAY-1999', 'DD-MON-YYYY'));
+  9  AND     (salary >=10000 OR hire_date > to_date('01-MAY-1999', 'DD-MON-YYYY'));
 
 EMPLOYEE ID FIRST NAME           HIRE DAT JOB ID         SALARY DEPARTMENT ID
 ----------- -------------------- -------- ---------- ---------- -------------
@@ -182,27 +184,21 @@ SQL> SELECT      first_name      AS  "FIRST NAME",
   3              hire_date       AS  "HIRE DATE",
   4              department_id   AS  "DEPARTMENT ID"
   5  FROM        employees
-  6  WHERE       first_name  LIKE    'A%'
-  7  OR          first_name  LIKE    'J%'
-  8  OR          first_name  LIKE    'K%'
-  9  OR          first_name  LIKE    'S%'
- 10  AND         salary      BETWEEN 5000 AND 15000
- 11  ORDER BY    first_name;
+  6  WHERE       SUBSTR(first_name, 1, 1)    IN  ('A', 'J', 'K', 'S')
+  7  AND         salary                      BETWEEN 5000 AND 15000
+  8  ORDER BY    first_name;
 
 FIRST NAME               SALARY HIRE DAT DEPARTMENT ID
 -------------------- ---------- -------- -------------
 Alexander                  9000 03-01-90            60
-Jennifer                   4400 17-09-87            10
 Jonathon                   8600 24-03-98            80
 Kevin                      5800 16-11-99            50
 Kimberely                  7000 24-05-99              
 Shelley                   12000 07-06-94           110
 
-6 rows selected. 
-
 SQL> 
 SQL> REM 18. Display the experience of employees in no. of years and months who were hired after 1998. 
-SQL> REM     Label the columns as: (EMPLOYEE_ID, FIRST_NAME, HIRE_DATE, EXP­YRS, EXP­MONTHS)
+SQL> REM     Label the columns as: (EMPLOYEE_ID, FIRST_NAME, HIRE_DATE, EXPï¿½YRS, EXPï¿½MONTHS)
 SQL> 
 SQL> SELECT  employee_id                                                 AS  "EMPLOYEE ID",
   2          first_name                                                  AS  "FIRST NAME",
@@ -230,7 +226,7 @@ NO. OF DEPARTMENTS
                  7
 
 SQL> 
-SQL> REM 20. Show the number of employees hired by year­wise. Sort the result by year­wise.
+SQL> REM 20. Show the number of employees hired by yearï¿½wise. Sort the result by yearï¿½wise.
 SQL> 
 SQL> SELECT  COUNT(*)                        AS  "NO. OF EMPLOYEES",
   2          EXTRACT(YEAR FROM hire_date)    AS  "YEAR"

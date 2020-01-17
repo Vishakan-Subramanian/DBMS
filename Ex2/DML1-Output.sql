@@ -1,8 +1,4 @@
 SQL> SET ECHO ON;
-SQL> DROP TABLE Classes;
-
-Table CLASSES dropped.
-
 SQL> 
 SQL> REM ********************************************************************
 SQL> REM 		UCS 1412 - DATABASE LAB | IV SEMESTER
@@ -10,16 +6,21 @@ SQL> REM 		EX : 2     DML BASICS
 SQL> REM 								- S. Vishakan 18 5001 196 CSE - C
 SQL> REM ********************************************************************
 SQL> 
+SQL> DROP TABLE  Classes;
+
+Table CLASSES dropped.
+
 SQL> 
 SQL> CREATE TABLE Classes(
   2      class           VARCHAR2(20)
-  3      CONSTRAINT  class_pk PRIMARY KEY,
-  4      type            CHAR(2),
-  5      country         VARCHAR2(15),
-  6      numGuns         NUMBER(2),
-  7      bore            NUMBER(3),
-  8      displacement    NUMBER(6)
-  9                      );
+  3      CONSTRAINT      class_pk        PRIMARY KEY,
+  4      type            CHAR(2)
+  5      CONSTRAINT      type_chk        CHECK(type IN ('bb', 'bc')),
+  6      country         VARCHAR2(15),
+  7      numGuns         NUMBER(2),
+  8      bore            NUMBER(3),
+  9      displacement    NUMBER(6)
+ 10      );
 
 Table CLASSES created.
 

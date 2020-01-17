@@ -9,7 +9,8 @@ DROP TABLE  Classes;
 CREATE TABLE Classes(
     class           VARCHAR2(20)
     CONSTRAINT      class_pk        PRIMARY KEY,
-    type            CHAR(2),
+    type            CHAR(2)
+    CONSTRAINT      type_chk        CHECK(type IN ('bb', 'bc')),
     country         VARCHAR2(15),
     numGuns         NUMBER(2),
     bore            NUMBER(3),
