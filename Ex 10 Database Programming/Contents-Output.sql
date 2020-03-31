@@ -1,7 +1,7 @@
 SQL> REM ********************************************************************
 SQL> REM 		UCS 1412 - DATABASE LAB | IV SEMESTER
 SQL> REM 		EX : 10    DATABASE APPLICATION PROGRAMMING USING JDBC
-SQL> REM                                    - S. Vishakan 18 5001 196 CSE - C
+SQL> REM                                  - S. Vishakan 18 5001 196 CSE - C
 SQL> REM ********************************************************************
 SQL> 
 SQL> REM CREATE TABLE STATEMENT
@@ -26,43 +26,16 @@ SQL> CREATE TABLE Emp_Payroll(eid NUMBER(6)
  16                          net_pay NUMBER(8,2)
  17                          );
 
-Error starting at line : 11 in command -
-CREATE TABLE Emp_Payroll(eid NUMBER(6)
-                        CONSTRAINT ep_eid_pk PRIMARY KEY,
-                        ename VARCHAR2(25)
-                        CONSTRAINT ep_ename_nn NOT NULL,
-                        dob DATE,
-                        sex CHAR(1)
-                        CONSTRAINT sex_chk CHECK(sex IN('M', 'F')),
-                        designation VARCHAR2(15),
-                        basic NUMBER(6),
-                        da NUMBER(7,2),
-                        hra NUMBER(7,2),
-                        pf NUMBER(7,2),
-                        mc NUMBER(7,2),
-                        gross NUMBER(8,2),
-                        tot_deduc NUMBER(8,2),
-                        net_pay NUMBER(8,2)
-                        )
-Error report -
-ORA-00955: name is already used by an existing object
-00955. 00000 -  "name is already used by an existing object"
-*Cause:    
-*Action:
+Table EMP_PAYROLL created.
+
 SQL> 
 SQL> INSERT INTO emp_payroll(eid, ename, dob, sex, designation, basic) values (1, 'Sample', '27-07-2000', 'M', 'Admin', 50000);
 
-Error starting at line : 29 in command -
-INSERT INTO emp_payroll(eid, ename, dob, sex, designation, basic) values (1, 'Sample', '27-07-2000', 'M', 'Admin', 50000)
-Error report -
-ORA-00001: unique constraint (VISH.EP_EID_PK) violated
+1 row inserted.
 
 SQL> INSERT INTO emp_payroll(eid, ename, dob, sex, designation, basic) values (2, 'Sample2', '26-06-2000', 'F', 'Manager', 40000);
 
-Error starting at line : 30 in command -
-INSERT INTO emp_payroll(eid, ename, dob, sex, designation, basic) values (2, 'Sample2', '26-06-2000', 'F', 'Manager', 40000)
-Error report -
-ORA-00001: unique constraint (VISH.EP_EID_PK) violated
+1 row inserted.
 
 SQL> 
 SQL> SELECT * FROM emp_payroll;
