@@ -8,31 +8,31 @@ SET SERVEROUTPUT ON;
 
 REM 1. Check whether the given pizza type is available. If not display appropriate message.
 
+set serveroutput on;
+set echo on;
+
 DECLARE
 	ptype pizza.pizza_type % TYPE;
 	p_id pizza.pizza_id % TYPE;
 	pizza_type pizza.pizza_type % TYPE;
 	u_price pizza.unit_price % TYPE;
-    
-    CURSOR p_select IS
-		SELECT *
-		FROM pizza
-		WHERE pizza_type = ptype;
+		
 
 BEGIN
 	ptype := '&ptype';
     
-	OPEN p_select;
+	SELECT * INTO p_id, pizza_type, u_price
+    FROM pizza
+    WHERE pizza_type = ptype;
     
-    FETCH p_select INTO p_id, pizza_type, u_price;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Pizza type: '||ptype||' is not available.');
 
-	IF p_select%ROWCOUNT = 0 THEN
-		DBMS_OUTPUT.PUT_LINE('Pizza type: '||ptype||' is not available.');
-	ELSE
+	IF SQL%FOUND THEN
 		DBMS_OUTPUT.PUT_LINE('Pizza type: '||ptype||' is available.');
 	END IF;
-
-	CLOSE p_select;
+    
 END;
 /
 
