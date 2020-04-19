@@ -1,7 +1,7 @@
 REM ********************************************************************
 REM	     UCS 1412 - DATABASE LAB | IV SEMESTER
 REM	     EX : 6	PL/SQL - STORED PROCEDURES & FUNCTIONS
-REM				                  - S. Vishakan 18 5001 196 CSE - C
+REM	                                  - S. Vishakan 18 5001 196 CSE - C
 REM ********************************************************************
 
 REM	1. Write a stored function to display the total number of pizzas ordered by the given 
