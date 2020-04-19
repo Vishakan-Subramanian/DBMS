@@ -39,6 +39,14 @@ SELECT  no_orders(o.order_no) AS no_orders
 FROM    orders o 
 WHERE   order_no = 'OP100';
 
+SELECT  qty
+FROM    order_list 
+WHERE   order_no = 'OP100';
+
+SELECT  SUM(qty)
+FROM    order_list
+WHERE   order_no = 'OP100';
+
 REM	2. Write a PL/SQL block to calculate the total amount, discount and billable amount 
 REM	(Amount to be paid) as given below:
 REM	For total amount > 2000 and total amount < 5000:  Discount=5% 
