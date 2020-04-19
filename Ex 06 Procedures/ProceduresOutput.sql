@@ -2,7 +2,7 @@ SQL> @ "D:\College Material\Second Year\4th Semester\DBMS Lab\Ex6\Procedures.sql
 SQL> REM ********************************************************************
 SQL> REM	  UCS 1412 - DATABASE LAB | IV SEMESTER
 SQL> REM	  EX : 6     PL/SQL - STORED PROCEDURES & FUNCTIONS
-SQL> REM					                         - S. Vishakan 18 5001 196 CSE - C
+SQL> REM                                   - S. Vishakan 18 5001 196 CSE - C
 SQL> REM ********************************************************************
 SQL> 
 SQL> REM     1. Write a stored function to display the total number of pizzas ordered by the given
