@@ -29,7 +29,8 @@ public class Employee extends javax.swing.JFrame {
      */
     public Employee() {
         initComponents();
-        this.setSize(650, 550);
+        this.setSize(650, 1020);
+        this.setResizable(false);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2 - this.getSize().width/2, dim.height/2 - this.getSize().height/2);
        
@@ -61,7 +62,13 @@ public class Employee extends javax.swing.JFrame {
         sexText.setText("");
         jobText.setText("");
         basicText.setText("");
-        disableButtons();
+        hraText.setText("");
+        daText.setText("");
+        pfText.setText("");
+        mcText.setText("");
+        netText.setText("");
+        deducText.setText("");
+        grossText.setText("");
     }
     
     private void disableButtons(){
@@ -69,6 +76,8 @@ public class Employee extends javax.swing.JFrame {
         updateBtn.setEnabled(false);
         searchBtn.setEnabled(false);
         deleteBtn.setEnabled(false);
+        nextBtn.setEnabled(false);
+        prevBtn.setEnabled(false);
     }
     
     private void disableTextFields(){
@@ -87,6 +96,15 @@ public class Employee extends javax.swing.JFrame {
         sexText.setEnabled(true);
         jobText.setEnabled(true);
         basicText.setEnabled(true);
+    }
+    
+    private void editableState(boolean flag){
+        idText.setEnabled(flag);
+        nameText.setEnabled(flag);
+        dobText.setEnabled(flag);
+        sexText.setEnabled(flag);
+        jobText.setEnabled(flag);
+        basicText.setEnabled(flag);
     }
 
     /**
@@ -110,12 +128,33 @@ public class Employee extends javax.swing.JFrame {
         basicText = new javax.swing.JTextField();
         idText = new javax.swing.JTextField();
         deleteBtn = new javax.swing.JButton();
-        addBtn = new javax.swing.JButton();
+        clearBtn = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         sexText = new javax.swing.JTextField();
         searchBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        daText = new javax.swing.JTextField();
+        basicText2 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        hraText = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        pfText = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        mcText = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        daText4 = new javax.swing.JTextField();
+        grossText = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        deducText = new javax.swing.JTextField();
+        netText = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        prevBtn = new javax.swing.JButton();
+        nextBtn = new javax.swing.JButton();
+        addBtn = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Database Programming");
@@ -224,18 +263,17 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(deleteBtn);
-        deleteBtn.setBounds(490, 450, 130, 40);
+        deleteBtn.setBounds(330, 870, 130, 40);
 
-        addBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        addBtn.setText("ADD");
-        addBtn.setEnabled(false);
-        addBtn.addActionListener(new java.awt.event.ActionListener() {
+        clearBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        clearBtn.setText("CLEAR");
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBtnActionPerformed(evt);
+                clearBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(addBtn);
-        addBtn.setBounds(20, 450, 130, 40);
+        getContentPane().add(clearBtn);
+        clearBtn.setBounds(480, 870, 130, 40);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 0));
@@ -256,7 +294,7 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(searchBtn);
-        searchBtn.setBounds(180, 450, 130, 40);
+        searchBtn.setBounds(30, 930, 180, 40);
 
         updateBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         updateBtn.setText("UPDATE");
@@ -267,67 +305,200 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(updateBtn);
-        updateBtn.setBounds(330, 450, 130, 40);
+        updateBtn.setBounds(180, 870, 130, 40);
 
-        jLabel8.setBackground(new java.awt.Color(102, 0, 102));
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 0));
-        jLabel8.setOpaque(true);
+        jLabel8.setText("DA");
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(-70, -40, 800, 670);
+        jLabel8.setBounds(20, 450, 100, 30);
+
+        daText.setEditable(false);
+        daText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(daText);
+        daText.setBounds(310, 450, 310, 40);
+
+        basicText2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(basicText2);
+        basicText2.setBounds(310, 450, 310, 40);
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 0));
+        jLabel10.setText("DA");
+        getContentPane().add(jLabel10);
+        jLabel10.setBounds(20, 450, 100, 30);
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 0));
+        jLabel11.setText("HRA");
+        getContentPane().add(jLabel11);
+        jLabel11.setBounds(20, 510, 100, 30);
+
+        hraText.setEditable(false);
+        hraText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(hraText);
+        hraText.setBounds(310, 510, 310, 40);
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 0));
+        jLabel12.setText("PF");
+        getContentPane().add(jLabel12);
+        jLabel12.setBounds(20, 570, 100, 30);
+
+        pfText.setEditable(false);
+        pfText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(pfText);
+        pfText.setBounds(310, 570, 310, 40);
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 0));
+        jLabel13.setText("MC");
+        getContentPane().add(jLabel13);
+        jLabel13.setBounds(20, 630, 100, 30);
+
+        mcText.setEditable(false);
+        mcText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(mcText);
+        mcText.setBounds(310, 630, 310, 40);
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 0));
+        jLabel15.setText("MC");
+        getContentPane().add(jLabel15);
+        jLabel15.setBounds(20, 630, 100, 30);
+
+        daText4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(daText4);
+        daText4.setBounds(310, 630, 310, 40);
+
+        grossText.setEditable(false);
+        grossText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(grossText);
+        grossText.setBounds(310, 690, 310, 40);
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 0));
+        jLabel14.setText("Gross Pay");
+        getContentPane().add(jLabel14);
+        jLabel14.setBounds(20, 690, 100, 30);
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 0));
+        jLabel16.setText("Total Deductions");
+        getContentPane().add(jLabel16);
+        jLabel16.setBounds(20, 750, 170, 30);
+
+        deducText.setEditable(false);
+        deducText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(deducText);
+        deducText.setBounds(310, 750, 310, 40);
+
+        netText.setEditable(false);
+        netText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(netText);
+        netText.setBounds(310, 810, 310, 40);
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 0));
+        jLabel17.setText("Net Pay");
+        getContentPane().add(jLabel17);
+        jLabel17.setBounds(20, 810, 100, 30);
+
+        prevBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        prevBtn.setText("PREVIOUS RECORD");
+        prevBtn.setEnabled(false);
+        prevBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prevBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(prevBtn);
+        prevBtn.setBounds(430, 930, 180, 40);
+
+        nextBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        nextBtn.setText("NEXT RECORD");
+        nextBtn.setEnabled(false);
+        nextBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(nextBtn);
+        nextBtn.setBounds(230, 930, 180, 40);
+
+        addBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        addBtn.setText("ADD");
+        addBtn.setEnabled(false);
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(addBtn);
+        addBtn.setBounds(30, 870, 130, 40);
+
+        jLabel9.setBackground(new java.awt.Color(153, 0, 153));
+        jLabel9.setOpaque(true);
+        getContentPane().add(jLabel9);
+        jLabel9.setBounds(-60, -80, 780, 1120);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        // TODO add your handling code here:
-        try{
-            String insert = "INSERT INTO Emp_Payroll(eid, ename, dob, sex, designation, basic) VALUES (?,?,?,?,?,?)";
-            ps = con.prepareStatement(insert);
-            ps.setString(1, idText.getText());
-            ps.setString(2, nameText.getText());
-            ps.setString(3, dobText.getText());
-            ps.setString(4, sexText.getText());
-            ps.setString(5, jobText.getText());
-            ps.setString(6, basicText.getText());
-            ps.execute();
-            
-            String call_pay_calc = "CALL pay_calc(?,?)";
-            call_stmt = con.prepareCall(call_pay_calc);
-            call_stmt.setString(1, idText.getText());
-            call_stmt.setString(2, basicText.getText());
-            call_stmt.execute();
-            
-            JOptionPane.showMessageDialog(this, "Insertion Successful!");
-        }
-        catch(HeadlessException | NumberFormatException | SQLException e){
-            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(this, e);
-        }
-        
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         clearTextFields();
-                
-    }//GEN-LAST:event_addBtnActionPerformed
+        disableButtons();
+    }//GEN-LAST:event_clearBtnActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         int emp_id = Integer.parseInt(idText.getText());
+        boolean record_found = false;
         
         try{
-            String sel_stmt = "SELECT eid, ename, dob, sex, designation, basic FROM emp_payroll WHERE eid = "+emp_id;
-            stmt  = con.createStatement();
+            String sel_stmt = "SELECT * FROM emp_payroll ORDER BY eid ASC";
+            //to allow for next and previous record scrolling, Statement obj. should be of this form
+            stmt  = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rs = stmt.executeQuery(sel_stmt);
             
-            if(rs.next()){
-                idText.setText(rs.getString(1));
-                nameText.setText(rs.getString(2));
-                dobText.setText(rs.getString(3).substring(0, 10));
-                sexText.setText(rs.getString(4));
-                jobText.setText(rs.getString(5));
-                basicText.setText(rs.getString(6)); 
+            
+            while(rs.next()){
+                if(Integer.parseInt(rs.getString(1)) == emp_id){    //finding the particular employee
+                    record_found = true;
+                    
+                    idText.setText(rs.getString(1));
+                    nameText.setText(rs.getString(2));
+                    dobText.setText(rs.getString(3).substring(0, 10));
+                    sexText.setText(rs.getString(4));
+                    jobText.setText(rs.getString(5));
+                    basicText.setText(rs.getString(6));
+                    daText.setText(rs.getString(7));
+                    hraText.setText(rs.getString(8));
+                    pfText.setText(rs.getString(9));
+                    mcText.setText(rs.getString(10));
+                    grossText.setText(rs.getString(11));
+                    deducText.setText(rs.getString(12));
+                    netText.setText(rs.getString(13));
                 
-                JOptionPane.showMessageDialog(this, "Record Found!");
+                    JOptionPane.showMessageDialog(this, "Record Found!");
+                    
+                    if(rs.isLast() == false){
+                        nextBtn.setEnabled(true);
+                    }
+                    if(rs.isFirst() == false){
+                        prevBtn.setEnabled(true);
+                    }
+                    
+                    if(rs.isAfterLast()){
+                        rs.previous();
+                    }
+                    if(rs.isBeforeFirst()){
+                        rs.next();
+                    }
+                    
+                    break;
+                }
             }
-            else{
+            if(record_found == false){
                 JOptionPane.showMessageDialog(this, "No Records Found!");
             }
         }
@@ -354,6 +525,7 @@ public class Employee extends javax.swing.JFrame {
         }
         
         clearTextFields();
+        disableButtons();
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
@@ -381,6 +553,7 @@ public class Employee extends javax.swing.JFrame {
         }
         
         clearTextFields();
+        disableButtons();
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void idTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idTextKeyTyped
@@ -433,6 +606,99 @@ public class Employee extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_idTextInputMethodTextChanged
 
+    private void prevBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevBtnActionPerformed
+        try {
+            
+            rs.previous();
+            
+            if(rs.isBeforeFirst()){
+                JOptionPane.showMessageDialog(this, "Current Record is the First Record!");
+                rs.next();
+                prevBtn.setEnabled(false);
+            }
+            
+            idText.setText(rs.getString(1));
+            nameText.setText(rs.getString(2));
+            dobText.setText(rs.getString(3).substring(0, 10));
+            sexText.setText(rs.getString(4));
+            jobText.setText(rs.getString(5));
+            basicText.setText(rs.getString(6));
+            daText.setText(rs.getString(7));
+            hraText.setText(rs.getString(8));
+            pfText.setText(rs.getString(9));
+            mcText.setText(rs.getString(10));
+            grossText.setText(rs.getString(11));
+            deducText.setText(rs.getString(12));
+            netText.setText(rs.getString(13));
+            //JOptionPane.showMessageDialog(this, "Record Found!");
+            nextBtn.setEnabled(true);
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex);
+        }
+        
+    }//GEN-LAST:event_prevBtnActionPerformed
+
+    private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
+        try {
+            if(rs.next()){
+                idText.setText(rs.getString(1));
+                nameText.setText(rs.getString(2));
+                dobText.setText(rs.getString(3).substring(0, 10));
+                sexText.setText(rs.getString(4));
+                jobText.setText(rs.getString(5));
+                basicText.setText(rs.getString(6));
+                daText.setText(rs.getString(7));
+                hraText.setText(rs.getString(8));
+                pfText.setText(rs.getString(9));
+                mcText.setText(rs.getString(10));
+                grossText.setText(rs.getString(11));
+                deducText.setText(rs.getString(12));
+                netText.setText(rs.getString(13));
+                //JOptionPane.showMessageDialog(this, "Record Found!");
+                prevBtn.setEnabled(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Current Record is the Last Record!");
+                rs.previous();
+                nextBtn.setEnabled(false);
+            }
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex);
+        }
+    }//GEN-LAST:event_nextBtnActionPerformed
+
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        try{
+            String insert = "INSERT INTO Emp_Payroll(eid, ename, dob, sex, designation, basic) VALUES (?,?,?,?,?,?)";
+            ps = con.prepareStatement(insert);
+            ps.setString(1, idText.getText());
+            ps.setString(2, nameText.getText());
+            ps.setString(3, dobText.getText());
+            ps.setString(4, sexText.getText());
+            ps.setString(5, jobText.getText());
+            ps.setString(6, basicText.getText());
+            ps.execute();
+            
+            String call_pay_calc = "CALL pay_calc(?,?)";
+            call_stmt = con.prepareCall(call_pay_calc);
+            call_stmt.setString(1, idText.getText());
+            call_stmt.setString(2, basicText.getText());
+            call_stmt.execute();
+            
+            JOptionPane.showMessageDialog(this, "Insertion Successful!");
+        }
+        catch(HeadlessException | NumberFormatException | SQLException e){
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(this, e);
+        }
+        
+        clearTextFields();
+    }//GEN-LAST:event_addBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -471,10 +737,25 @@ public class Employee extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JTextField basicText;
+    private javax.swing.JTextField basicText2;
+    private javax.swing.JButton clearBtn;
+    private javax.swing.JTextField daText;
+    private javax.swing.JTextField daText4;
+    private javax.swing.JTextField deducText;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JTextField dobText;
+    private javax.swing.JTextField grossText;
+    private javax.swing.JTextField hraText;
     private javax.swing.JTextField idText;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -482,8 +763,14 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jobText;
+    private javax.swing.JTextField mcText;
     private javax.swing.JTextField nameText;
+    private javax.swing.JTextField netText;
+    private javax.swing.JButton nextBtn;
+    private javax.swing.JTextField pfText;
+    private javax.swing.JButton prevBtn;
     private javax.swing.JButton searchBtn;
     private javax.swing.JTextField sexText;
     private javax.swing.JButton updateBtn;
