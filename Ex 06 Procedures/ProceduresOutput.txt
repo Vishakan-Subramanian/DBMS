@@ -78,75 +78,73 @@ SQL> REM     Calculate the billable amount (after the discount) and update the s
 SQL> REM     Bill Amount = Total – Discount.
 SQL> 
 SQL> CREATE OR REPLACE PROCEDURE calc_bill
-  2  (order_id IN orders.order_no % TYPE,
-  3  total OUT orders.total_amt % TYPE) AS
-  4  
-  5  	 disc orders.discount % TYPE;
-  6  	 disc_amt orders.total_amt % TYPE;
-  7  	 billed_amt orders.bill_amt % TYPE;
+  2  (order_id IN orders.order_no % TYPE) AS
+  3  
+  4  	 disc orders.discount % TYPE;
+  5  	 disc_amt orders.total_amt % TYPE;
+  6  	 billed_amt orders.bill_amt % TYPE;
+  7  	 total orders.total_amt % TYPE;
   8  
-  9  
- 10  	 CURSOR order_finder IS
- 11  	     SELECT  SUM(qty * unit_price)
- 12  	     FROM    pizza, order_list
- 13  	     WHERE   order_list.pizza_id = pizza.pizza_id
- 14  	     AND     order_no = order_id;
- 15  
- 16  	 BEGIN
- 17  
- 18  	     total := 0;
- 19  	     OPEN order_finder;
- 20  
- 21  	     FETCH order_finder INTO total;
- 22  
- 23  	     IF total IS NOT NULL THEN
- 24  
- 25  		 IF total > 10000 THEN
- 26  		     disc := 0.20;
- 27  		 ELSIF total > 5000 THEN
- 28  		     disc := 0.10;
- 29  		 ELSIF total > 2000 THEN
- 30  		     disc := 0.05;
- 31  		 ELSE
- 32  		     disc := 0.0;
- 33  		 END IF;
- 34  
- 35  		 disc_amt := disc * total;
- 36  		 billed_amt := total - disc_amt;
- 37  
- 38  		 UPDATE orders
- 39  		 SET total_amt = total,
- 40  		     discount = disc,
- 41  		     bill_amt = billed_amt
- 42  		 WHERE order_no = order_id;
- 43  
- 44  		 DBMS_OUTPUT.PUT_LINE('Total Amount ' || LPAD(': $', 10) || total);
- 45  		 DBMS_OUTPUT.PUT_LINE('Discount '|| LPAD(': ', 13) || (disc * 100) || '%');
- 46  		 DBMS_OUTPUT.PUT_LINE('Discount Amount '|| LPAD(': $', 7) || disc_amt);
- 47  		 DBMS_OUTPUT.PUT_LINE('Billable Amount '|| LPAD(': $', 7) || billed_amt);
- 48  
- 49  		 CLOSE order_finder;
- 50  
- 51  	     ELSE
- 52  		 DBMS_OUTPUT.PUT_LINE('Order Number ' || order_id || ' does not exist.');
- 53  	     END IF;
- 54  END;
- 55  /
+  9  	 CURSOR order_finder IS
+ 10  	     SELECT  SUM(qty * unit_price)
+ 11  	     FROM    pizza, order_list
+ 12  	     WHERE   order_list.pizza_id = pizza.pizza_id
+ 13  	     AND     order_no = order_id;
+ 14  
+ 15  	 BEGIN
+ 16  
+ 17  	     total := 0;
+ 18  	     OPEN order_finder;
+ 19  
+ 20  	     FETCH order_finder INTO total;
+ 21  
+ 22  	     IF total IS NOT NULL THEN
+ 23  
+ 24  		 IF total > 10000 THEN
+ 25  		     disc := 0.20;
+ 26  		 ELSIF total > 5000 THEN
+ 27  		     disc := 0.10;
+ 28  		 ELSIF total > 2000 THEN
+ 29  		     disc := 0.05;
+ 30  		 ELSE
+ 31  		     disc := 0.0;
+ 32  		 END IF;
+ 33  
+ 34  		 disc_amt := disc * total;
+ 35  		 billed_amt := total - disc_amt;
+ 36  
+ 37  		 UPDATE orders
+ 38  		 SET total_amt = total,
+ 39  		     discount = disc,
+ 40  		     bill_amt = billed_amt
+ 41  		 WHERE order_no = order_id;
+ 42  
+ 43  		 DBMS_OUTPUT.PUT_LINE('Total Amount ' || LPAD(': $', 10) || total);
+ 44  		 DBMS_OUTPUT.PUT_LINE('Discount '|| LPAD(': ', 13) || (disc * 100) || '%');
+ 45  		 DBMS_OUTPUT.PUT_LINE('Discount Amount '|| LPAD(': $', 7) || disc_amt);
+ 46  		 DBMS_OUTPUT.PUT_LINE('Billable Amount '|| LPAD(': $', 7) || billed_amt);
+ 47  
+ 48  		 CLOSE order_finder;
+ 49  
+ 50  	     ELSE
+ 51  		 DBMS_OUTPUT.PUT_LINE('Order Number ' || order_id || ' does not exist.');
+ 52  	     END IF;
+ 53  END;
+ 54  /
 
 Procedure created.
 
 SQL> 
 SQL> DECLARE
   2  	 order_id VARCHAR2(10);
-  3  	 total orders.total_amt % TYPE;
-  4  BEGIN
-  5  	 order_id := '&order_id';
-  6  	 calc_bill(order_id, total);
-  7  END;
-  8  /
+  3  BEGIN
+  4  	 order_id := '&order_id';
+  5  	 calc_bill(order_id);
+  6  END;
+  7  /
 Enter value for order_id: OP100
-old   5:     order_id := '&order_id';
-new   5:     order_id := 'OP100';
+old   4:     order_id := '&order_id';
+new   4:     order_id := 'OP100';
 Total Amount        : $2350                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 Discount            : 5%                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 Discount Amount     : $117.5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
@@ -219,7 +217,7 @@ SQL> CREATE OR REPLACE PROCEDURE print_bill
  50  	     DBMS_OUTPUT.PUT_LINE('Total : ' || LPAD(no_orders(order_id), 20));
  51  	     DBMS_OUTPUT.PUT_LINE('--------------------------------------------------------------');
  52  
- 53  	     calc_bill(order_id, total);
+ 53  	     calc_bill(order_id);
  54  
  55  	     DBMS_OUTPUT.PUT_LINE('--------------------------------------------------------------');
  56  	     DBMS_OUTPUT.PUT_LINE('Great Offers! Discount up to 25% on DIWALI Festival Day...');

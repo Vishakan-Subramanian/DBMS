@@ -1,7 +1,7 @@
 REM ********************************************************************
 REM	     UCS 1412 - DATABASE LAB | IV SEMESTER
 REM	     EX : 6	PL/SQL - STORED PROCEDURES & FUNCTIONS
-REM	                                  - S. Vishakan 18 5001 196 CSE - C
+REM				                  - S. Vishakan 18 5001 196 CSE - C
 REM ********************************************************************
 
 REM	1. Write a stored function to display the total number of pizzas ordered by the given 
@@ -56,14 +56,13 @@ REM	Calculate the billable amount (after the discount) and update the same in or
 REM	Bill Amount = Total – Discount.
 
 CREATE OR REPLACE PROCEDURE calc_bill
-(order_id IN orders.order_no % TYPE, 
-total OUT orders.total_amt % TYPE) AS
+(order_id IN orders.order_no % TYPE) AS
 
     disc orders.discount % TYPE;
     disc_amt orders.total_amt % TYPE;
     billed_amt orders.bill_amt % TYPE;
+    total orders.total_amt % TYPE;
     
-
     CURSOR order_finder IS
         SELECT  SUM(qty * unit_price)
         FROM    pizza, order_list
@@ -113,10 +112,9 @@ END;
 
 DECLARE
     order_id VARCHAR2(10);
-    total orders.total_amt % TYPE;
 BEGIN
     order_id := '&order_id';
-    calc_bill(order_id, total);
+    calc_bill(order_id);
 END;
 /
 
@@ -179,7 +177,7 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('Total : ' || LPAD(no_orders(order_id), 20));
         DBMS_OUTPUT.PUT_LINE('--------------------------------------------------------------');
         
-        calc_bill(order_id, total);
+        calc_bill(order_id);
     
         DBMS_OUTPUT.PUT_LINE('--------------------------------------------------------------');
         DBMS_OUTPUT.PUT_LINE('Great Offers! Discount up to 25% on DIWALI Festival Day...');
