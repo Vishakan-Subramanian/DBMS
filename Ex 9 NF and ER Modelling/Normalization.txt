@@ -1,0 +1,61 @@
+COMPANY(empid, name, address, bdate, sex, salary, dno, dname, mgr_id, pno, pname, pdno, hrs)
+
+FD1 : empid -> name, address, bdate, sex, salary, dno
+FD2 : dno -> dname, mgr_id
+FD3 : pno -> pname, pdno
+FD4 : empid, pno -> hrs
+
+Finding the Primary Key of the COMPANY relation
+
+{empid}+	: {empid, name, address, bdate, sex, salary, dno, dname, mgr_id}
+{dno}+		: {dno, dname, mgr_id}
+{pno}+		: {pno, pname, pdno}
+{empid, pno}+	: {empid, name, address, bdate, sex, salary, dno, dname, mgr_id, pno, pname, pdno, hrs}
+
+The closure of {empid, pno} contains all the attributes of the relation	
+
+Key Attributes of the Company Relation : empid, pno
+
+1NF Normalization
+
+The relations are already in 1NF form as there are no multi-valued
+attributes or composite attributes.
+
+2NF Normalization
+
+Since the attributes pname, pdno are non-key attributes that are not dependent upon empid
+and the attributes name, address, bdate, sex, salary, dno, dname, mgr_id are not dependent upon pno,
+we split them into 2 relations EMPLOYEES and PROJECT, with pno and empid their respective key attributes.
+
+Also, the hrs attribute is completely dependent upon the key attributes, those 3 attributes comprise
+another relation namely PROGRESS, with the empid and pno being the key attributes. 
+Empid and pno are also foreign keys which are referenced from the EMPLOYEES and PROJECT relations.
+
+Now, the relations are in 2NF.
+
+EMPLOYEES	(empid, name, address, bdate, sex, salary, dno, dname, mgr_id)
+PROJECT		(pno, pname, pdno)
+PROGRESS	(empid, pno, hrs)
+
+3NF Normalization
+
+Since dname, mgr_id of EMPLOYEES relation are transitively dependent upon empid through dno, 
+they have to be broken down, as 3NF disallows transitive dependency. Dno is also referenced
+as a foreign key in EMPLOYEES relation from the DEPARTMENTS relation where it is a key attribute.
+
+Now, the relations are in 3NF.
+
+EMPLOYEES	(empid, name, address, bdate, sex, salary, dno)
+DEPARTMENTS	(dno, dname, mgr_id)
+PROJECT		(pno, pname, pdno)
+PROGRESS	(empid, pno, hrs)
+
+FDs in 3NF form:
+
+FD1 : empid -> name, address, bdate, sex, salary, dno
+FD2 : dno -> dname, mgr_id
+FD3 : pno -> pname, pdno
+FD4 : empid -> pno, hrs
+
+
+Performing UNION on the 3NF FDs:
