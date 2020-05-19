@@ -13,9 +13,12 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class Employee extends javax.swing.JFrame {
 
@@ -24,13 +27,15 @@ public class Employee extends javax.swing.JFrame {
     CallableStatement call_stmt;
     PreparedStatement ps;
     ResultSet rs;
+    
     /**
      * Creates new form Employee
      */
-    public Employee() {
+    public Employee(){
         initComponents();
-        this.setSize(650, 1020);
+        this.setSize(1250, 950);
         this.setResizable(false);
+        
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2 - this.getSize().width/2, dim.height/2 - this.getSize().height/2);
        
@@ -44,12 +49,12 @@ public class Employee extends javax.swing.JFrame {
             
             catch(SQLException ex){
                 Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
             }
         }
         catch(ClassNotFoundException e){
             Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
         
         
@@ -58,9 +63,9 @@ public class Employee extends javax.swing.JFrame {
     private void clearTextFields(){
         idText.setText("");
         nameText.setText("");
-        dobText.setText("");
-        sexText.setText("");
-        jobText.setText("");
+        dobDate.setCalendar(null);
+        genderGroup.clearSelection();
+        jobBox.setSelectedIndex(0);
         basicText.setText("");
         hraText.setText("");
         daText.setText("");
@@ -83,18 +88,17 @@ public class Employee extends javax.swing.JFrame {
     private void setTextFieldState(boolean flag){
         idText.setEnabled(flag);
         nameText.setEnabled(flag);
-        dobText.setEnabled(flag);
-        sexText.setEnabled(flag);
-        jobText.setEnabled(flag);
+        dobDate.setEnabled(flag);
+        maleRadio.setEnabled(flag);
+        femaleRadio.setEnabled(flag);
+        jobBox.setEnabled(flag);
         basicText.setEnabled(flag);
     }
     
     private void editableState(boolean flag){
         idText.setEditable(flag);
         nameText.setEditable(flag);
-        dobText.setEditable(flag);
-        sexText.setEditable(flag);
-        jobText.setEditable(flag);
+        jobBox.setEditable(false);
         basicText.setEditable(flag);
     }
     
@@ -102,9 +106,16 @@ public class Employee extends javax.swing.JFrame {
         try {
             idText.setText(rs.getString(1));
             nameText.setText(rs.getString(2));
-            dobText.setText(rs.getString(3).substring(0, 10));
-            sexText.setText(rs.getString(4));
-            jobText.setText(rs.getString(5));
+            dobDate.setDate(stringToDate(rs.getString(3).substring(0,10)));
+            
+            if(rs.getString(4).equalsIgnoreCase("m")){
+                maleRadio.setSelected(true);
+            }
+            else{
+                femaleRadio.setSelected(true);
+            }
+            
+            jobBox.setSelectedItem(rs.getString(5));
             basicText.setText(rs.getString(6));
             daText.setText(rs.getString(7));
             hraText.setText(rs.getString(8));
@@ -116,9 +127,22 @@ public class Employee extends javax.swing.JFrame {
         } 
         catch (SQLException ex) {
             Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
                
+    }
+    
+    private java.util.Date stringToDate(String sdate){
+        //converting a String to a Date object for the JDateChooser Swing Control
+        java.util.Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(sdate);
+        } catch (ParseException ex) {
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+        
+        return date;
     }
 
     /**
@@ -130,6 +154,7 @@ public class Employee extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        genderGroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -137,82 +162,85 @@ public class Employee extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         nameText = new javax.swing.JTextField();
-        dobText = new javax.swing.JTextField();
-        jobText = new javax.swing.JTextField();
         basicText = new javax.swing.JTextField();
         idText = new javax.swing.JTextField();
         deleteBtn = new javax.swing.JButton();
         clearBtn = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        sexText = new javax.swing.JTextField();
         searchBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         daText = new javax.swing.JTextField();
-        basicText2 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         hraText = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         pfText = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         mcText = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        daText4 = new javax.swing.JTextField();
         grossText = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        femaleRadio = new javax.swing.JRadioButton();
+        maleRadio = new javax.swing.JRadioButton();
         jLabel16 = new javax.swing.JLabel();
         deducText = new javax.swing.JTextField();
         netText = new javax.swing.JTextField();
+        dobDate = new com.toedter.calendar.JDateChooser();
+        jobBox = new javax.swing.JComboBox<>();
         jLabel17 = new javax.swing.JLabel();
         prevBtn = new javax.swing.JButton();
         nextBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
         firstBtn = new javax.swing.JButton();
         lastBtn = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Database Programming");
         getContentPane().setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("EMPLOYEE DATABASE");
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(140, 20, 340, 40);
+        jLabel1.setBounds(430, 20, 420, 60);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 0));
         jLabel2.setText("Name");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(20, 140, 100, 30);
+        jLabel2.setBounds(30, 250, 270, 40);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 0));
         jLabel3.setText("Designation");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 330, 100, 30);
+        jLabel3.setBounds(30, 460, 270, 40);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 0));
         jLabel4.setText("DOB");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(20, 200, 100, 30);
+        jLabel4.setBounds(30, 320, 270, 40);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 0));
-        jLabel5.setText("Basic");
+        jLabel5.setText("Basic Pay");
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(20, 390, 100, 30);
+        jLabel5.setBounds(30, 530, 270, 40);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 0));
         jLabel6.setText("ID");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(20, 90, 100, 30);
+        jLabel6.setBounds(30, 180, 270, 40);
 
         nameText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         nameText.addActionListener(new java.awt.event.ActionListener() {
@@ -229,19 +257,11 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(nameText);
-        nameText.setBounds(310, 140, 310, 40);
-
-        dobText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(dobText);
-        dobText.setBounds(310, 200, 310, 40);
-
-        jobText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(jobText);
-        jobText.setBounds(310, 330, 310, 40);
+        nameText.setBounds(310, 250, 310, 40);
 
         basicText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(basicText);
-        basicText.setBounds(310, 390, 310, 40);
+        basicText.setBounds(310, 530, 310, 40);
 
         idText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         idText.addInputMethodListener(new java.awt.event.InputMethodListener() {
@@ -268,9 +288,9 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(idText);
-        idText.setBounds(310, 82, 310, 40);
+        idText.setBounds(310, 180, 310, 40);
 
-        deleteBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        deleteBtn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         deleteBtn.setText("DELETE");
         deleteBtn.setEnabled(false);
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -279,9 +299,9 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(deleteBtn);
-        deleteBtn.setBounds(270, 870, 110, 40);
+        deleteBtn.setBounds(530, 790, 130, 40);
 
-        clearBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        clearBtn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         clearBtn.setText("CLEAR");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -289,19 +309,15 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(clearBtn);
-        clearBtn.setBounds(530, 870, 110, 40);
+        clearBtn.setBounds(850, 790, 130, 40);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 0));
         jLabel7.setText("Sex");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(20, 270, 100, 30);
+        jLabel7.setBounds(30, 390, 270, 40);
 
-        sexText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(sexText);
-        sexText.setBounds(310, 270, 310, 40);
-
-        searchBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        searchBtn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         searchBtn.setText("SEARCH");
         searchBtn.setEnabled(false);
         searchBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -310,9 +326,9 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(searchBtn);
-        searchBtn.setBounds(400, 870, 110, 40);
+        searchBtn.setBounds(690, 790, 130, 40);
 
-        updateBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        updateBtn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         updateBtn.setText("UPDATE");
         updateBtn.setEnabled(false);
         updateBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -321,106 +337,114 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(updateBtn);
-        updateBtn.setBounds(140, 870, 110, 40);
+        updateBtn.setBounds(370, 790, 130, 40);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 0));
         jLabel8.setText("DA");
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(20, 450, 100, 30);
+        jLabel8.setBounds(710, 180, 170, 40);
 
         daText.setEditable(false);
         daText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        daText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                daTextActionPerformed(evt);
+            }
+        });
         getContentPane().add(daText);
-        daText.setBounds(310, 450, 310, 40);
-
-        basicText2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(basicText2);
-        basicText2.setBounds(310, 450, 310, 40);
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 0));
-        jLabel10.setText("DA");
-        getContentPane().add(jLabel10);
-        jLabel10.setBounds(20, 450, 100, 30);
+        daText.setBounds(890, 180, 310, 40);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 0));
         jLabel11.setText("HRA");
         getContentPane().add(jLabel11);
-        jLabel11.setBounds(20, 510, 100, 30);
+        jLabel11.setBounds(710, 250, 170, 40);
 
         hraText.setEditable(false);
         hraText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(hraText);
-        hraText.setBounds(310, 510, 310, 40);
+        hraText.setBounds(890, 250, 310, 40);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 0));
         jLabel12.setText("PF");
         getContentPane().add(jLabel12);
-        jLabel12.setBounds(20, 570, 100, 30);
+        jLabel12.setBounds(710, 320, 170, 40);
 
         pfText.setEditable(false);
         pfText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(pfText);
-        pfText.setBounds(310, 570, 310, 40);
+        pfText.setBounds(890, 320, 310, 40);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 0));
         jLabel13.setText("MC");
         getContentPane().add(jLabel13);
-        jLabel13.setBounds(20, 630, 100, 30);
+        jLabel13.setBounds(710, 390, 170, 40);
 
         mcText.setEditable(false);
         mcText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(mcText);
-        mcText.setBounds(310, 630, 310, 40);
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 0));
-        jLabel15.setText("MC");
-        getContentPane().add(jLabel15);
-        jLabel15.setBounds(20, 630, 100, 30);
-
-        daText4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        getContentPane().add(daText4);
-        daText4.setBounds(310, 630, 310, 40);
+        mcText.setBounds(890, 390, 310, 40);
 
         grossText.setEditable(false);
         grossText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(grossText);
-        grossText.setBounds(310, 690, 310, 40);
+        grossText.setBounds(890, 550, 310, 40);
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 0));
         jLabel14.setText("Gross Pay");
         getContentPane().add(jLabel14);
-        jLabel14.setBounds(20, 690, 100, 30);
+        jLabel14.setBounds(700, 550, 180, 40);
+
+        genderGroup.add(femaleRadio);
+        femaleRadio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        femaleRadio.setForeground(new java.awt.Color(255, 255, 0));
+        femaleRadio.setText("Female");
+        getContentPane().add(femaleRadio);
+        femaleRadio.setBounds(490, 390, 130, 40);
+
+        genderGroup.add(maleRadio);
+        maleRadio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        maleRadio.setForeground(new java.awt.Color(255, 255, 0));
+        maleRadio.setText("Male");
+        getContentPane().add(maleRadio);
+        maleRadio.setBounds(310, 390, 130, 40);
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 0));
         jLabel16.setText("Total Deductions");
         getContentPane().add(jLabel16);
-        jLabel16.setBounds(20, 750, 170, 30);
+        jLabel16.setBounds(700, 620, 180, 40);
 
         deducText.setEditable(false);
         deducText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(deducText);
-        deducText.setBounds(310, 750, 310, 40);
+        deducText.setBounds(890, 620, 310, 40);
 
         netText.setEditable(false);
         netText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(netText);
-        netText.setBounds(310, 810, 310, 40);
+        netText.setBounds(890, 690, 310, 40);
+
+        dobDate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(dobDate);
+        dobDate.setBounds(310, 320, 310, 40);
+
+        jobBox.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jobBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Intern", "Trainee", "Programmer", "Analyst", "Chef", "Systems Architect", "Database Engineer", "Manager", "HR", "Admin", "CFO", "CEO" }));
+        getContentPane().add(jobBox);
+        jobBox.setBounds(310, 460, 310, 40);
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 0));
         jLabel17.setText("Net Pay");
         getContentPane().add(jLabel17);
-        jLabel17.setBounds(20, 810, 100, 30);
+        jLabel17.setBounds(700, 690, 180, 40);
 
-        prevBtn.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        prevBtn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         prevBtn.setText("PREVIOUS RECORD");
         prevBtn.setEnabled(false);
         prevBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -429,9 +453,9 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(prevBtn);
-        prevBtn.setBounds(170, 930, 150, 40);
+        prevBtn.setBounds(370, 850, 210, 40);
 
-        nextBtn.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        nextBtn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         nextBtn.setText("NEXT RECORD");
         nextBtn.setEnabled(false);
         nextBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -440,9 +464,9 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(nextBtn);
-        nextBtn.setBounds(330, 930, 150, 40);
+        nextBtn.setBounds(610, 850, 210, 40);
 
-        addBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        addBtn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         addBtn.setText("ADD");
         addBtn.setEnabled(false);
         addBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -451,9 +475,9 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(addBtn);
-        addBtn.setBounds(10, 870, 110, 40);
+        addBtn.setBounds(210, 790, 130, 40);
 
-        firstBtn.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        firstBtn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         firstBtn.setText("FIRST RECORD");
         firstBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -461,9 +485,9 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(firstBtn);
-        firstBtn.setBounds(10, 930, 140, 40);
+        firstBtn.setBounds(130, 850, 210, 40);
 
-        lastBtn.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        lastBtn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lastBtn.setText("LAST RECORD");
         lastBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -471,12 +495,47 @@ public class Employee extends javax.swing.JFrame {
             }
         });
         getContentPane().add(lastBtn);
-        lastBtn.setBounds(500, 930, 140, 40);
+        lastBtn.setBounds(850, 850, 210, 40);
+
+        jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
+        getContentPane().add(jLabel10);
+        jLabel10.setBounds(670, 150, 550, 310);
+
+        jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
+        getContentPane().add(jLabel15);
+        jLabel15.setBounds(670, 520, 550, 240);
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("Final Pay-Slip");
+        getContentPane().add(jLabel19);
+        jLabel19.setBounds(670, 490, 550, 30);
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setText("Employee Information");
+        getContentPane().add(jLabel20);
+        jLabel20.setBounds(10, 120, 640, 30);
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 102, 102));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("Pay Split-Up");
+        getContentPane().add(jLabel21);
+        jLabel21.setBounds(670, 120, 550, 30);
+
+        jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
+        getContentPane().add(jLabel9);
+        jLabel9.setBounds(10, 150, 640, 460);
 
         jLabel18.setBackground(new java.awt.Color(153, 0, 153));
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 0));
         jLabel18.setOpaque(true);
         getContentPane().add(jLabel18);
-        jLabel18.setBounds(-30, -20, 750, 1050);
+        jLabel18.setBounds(-30, -20, 1330, 1050);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -535,9 +594,19 @@ public class Employee extends javax.swing.JFrame {
             String updateQuery = "UPDATE emp_payroll SET ename = ?, dob = ?, sex = ?, designation = ?, basic = ? WHERE eid = ?";
             ps = con.prepareStatement(updateQuery);
             ps.setString(1, nameText.getText());
-            ps.setString(2, dobText.getText());
-            ps.setString(3, sexText.getText());
-            ps.setString(4, jobText.getText());
+            
+            DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            String dob = df.format(dobDate.getDate());
+            ps.setString(2, dob);
+            
+            if(maleRadio.isSelected() == true){
+                ps.setString(3, "M");
+            }
+            else{
+                ps.setString(3, "F");
+            }
+            
+            ps.setString(4, jobBox.getSelectedItem().toString());
             ps.setString(5, basicText.getText());
             ps.setString(6, idText.getText());
             ps.execute();
@@ -655,9 +724,19 @@ public class Employee extends javax.swing.JFrame {
             ps = con.prepareStatement(insert);
             ps.setString(1, idText.getText());
             ps.setString(2, nameText.getText());
-            ps.setString(3, dobText.getText());
-            ps.setString(4, sexText.getText());
-            ps.setString(5, jobText.getText());
+            
+            DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            String dob = df.format(dobDate.getDate());
+            ps.setString(3, dob);
+            
+            if(maleRadio.isSelected() == true){
+                ps.setString(4, "M");
+            }
+            else{
+                ps.setString(4, "F");
+            }
+            
+            ps.setString(5, jobBox.getSelectedItem().toString());
             ps.setString(6, basicText.getText());
             ps.execute();
             
@@ -712,6 +791,10 @@ public class Employee extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lastBtnActionPerformed
 
+    private void daTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_daTextActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -750,14 +833,14 @@ public class Employee extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JTextField basicText;
-    private javax.swing.JTextField basicText2;
     private javax.swing.JButton clearBtn;
     private javax.swing.JTextField daText;
-    private javax.swing.JTextField daText4;
     private javax.swing.JTextField deducText;
     private javax.swing.JButton deleteBtn;
-    private javax.swing.JTextField dobText;
+    private com.toedter.calendar.JDateChooser dobDate;
+    private javax.swing.JRadioButton femaleRadio;
     private javax.swing.JButton firstBtn;
+    private javax.swing.ButtonGroup genderGroup;
     private javax.swing.JTextField grossText;
     private javax.swing.JTextField hraText;
     private javax.swing.JTextField idText;
@@ -771,15 +854,20 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jobText;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JComboBox<String> jobBox;
     private javax.swing.JButton lastBtn;
+    private javax.swing.JRadioButton maleRadio;
     private javax.swing.JTextField mcText;
     private javax.swing.JTextField nameText;
     private javax.swing.JTextField netText;
@@ -787,7 +875,6 @@ public class Employee extends javax.swing.JFrame {
     private javax.swing.JTextField pfText;
     private javax.swing.JButton prevBtn;
     private javax.swing.JButton searchBtn;
-    private javax.swing.JTextField sexText;
     private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
 }
